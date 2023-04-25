@@ -1,11 +1,7 @@
-import React, { useEffect, useMemo, useState } from "react";
-import { createRoot } from "react-dom/client";
-import { AgGridReact } from "ag-grid-react";
-
-import "ag-grid-community/styles/ag-grid.css";
-import "ag-grid-community/styles/ag-theme-alpine.css";
+import React, { useMemo } from "react";
 
 // Data
+
 const account1 = {
   owner: "Jonas Schmedtmann",
   movements: [200, 450, -400, 3000, -650, -130, 70, 1300],
@@ -34,60 +30,84 @@ const account4 = {
   pin: 4444,
 };
 
+const accounts = [account1, account2, account3, account4];
+
+const currencies = new Map([
+  ["USD", "United States dollar"],
+  ["EUR", "Euro"],
+  ["GBP", "Pound sterling"],
+]);
+
+const movements = [200, 450, -400, 3000, -650, -130, 70, 1300];
+// const containerMovements = document.querySelector(".movements");
+
+// const displayMovements = function (movements) {
+//   movements.forEach(function (mov, i) {
+//     const type = mov > 0 ? "deposit" : "withdrawal";
+
+//     const tr = `
+//     <tr>
+//     <td className="border">
+//       <div className=" ${
+//         type === "deposit" ? "bg-green-400" : "bg-red-400"
+//       } text-white text-center rounded-lg w-20">
+//       ${type} ${i + 1}
+//       </div>
+//     </td>
+//     <td className="border">${mov}$</td>
+//   </tr>
+//     `;
+//     containerMovements?.insertAdjacentHTML("afterbegin", tr);
+//   });
+// };
+
 const Table = () => {
-  //   const [rowData] = useState([
-  //     { make: "Toyota", model: "Celica", price: 35000 },
-  //     { make: "Ford", model: "Mondeo", price: 32000 },
-  //     { make: "Porsche", model: "Boxster", price: 72000 },
-  //   ]);
+  //   useMemo(() => displayMovements(account1.movements), []);
 
-  const [rowData, setRowData] = useState();
+  const eurToUsd = 1.1;
 
-  // never changes, so we can use useMemo
-  const columnDefs = useMemo(
-    () => [
-      { field: "athlete" },
-      { field: "country" },
-      { field: "year" },
-      { field: "date" },
-      { field: "sport" },
-      { field: "gold" },
-      { field: "silver" },
-      { field: "bronze" },
-      { field: "total" },
-    ],
-    []
-  );
+  const movementsUSD = movements.map((mov) => mov * eurToUsd);
 
-  // never changes, so we can use useMemo
-  const defaultColDef = useMemo(
-    () => ({
-      resizable: true,
-      sortable: true,
-    }),
-    []
-  );
+  //   movements.map((mov, i, arr) => {
+  //     console.log("mov", mov, "i", i, "arr", arr);
+  //   });
 
-  //   const [columnDefs] = useState([
-  //     { field: "make" },
-  //     { field: "model" },
-  //     { field: "price" },
-  //   ]);
+  //   create username
 
-  // gets called once, no dependencies, loads the grid data
-  useEffect(() => {
-    fetch("https://www.ag-grid.com/example-assets/olympic-winners.json")
-      .then((resp) => resp.json())
-      .then((data) => setRowData(data));
-  }, []);
+  const createUsernames = (accs) => {
+    accs.forEach((acc) => {
+      acc.username = acc.owner
+        .toLowerCase()
+        .split(" ")
+        .map((name) => name[0])
+        .join("");
+    });
+  };
+
+  createUsernames(accounts);
+  console.log(accounts);
 
   return (
-    <div className="ag-theme-alpine" style={{ height: 600, width: "100%" }}>
-      <AgGridReact
-        rowData={rowData}
-        defaultColDef={defaultColDef}
-        columnDefs={columnDefs}
-      ></AgGridReact>
+    <div className="w-full">
+      <table className=" w-full bg-white rounded-md drop-shadow-md overflow-y-scroll">
+        {movements.map((item, key) => (
+          <tr
+            key={key}
+            className=" hover:scale-105 hover:cursor-pointer transition-all hover:bg-gray-400 hover:text-white"
+          >
+            <td className="border-b p-2">
+              <div
+                className={` ${
+                  item > 0 ? "bg-green-400" : "bg-red-400 w-24"
+                }  text-white text-center rounded-lg w-20`}
+              >
+                {item > 0 ? "deposit" : "withdrawal"}
+              </div>
+            </td>
+            <td className="border-b"> {item}</td>
+          </tr>
+        ))}
+      </table>
     </div>
   );
 };
