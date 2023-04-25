@@ -1,7 +1,6 @@
 import React, { useMemo } from "react";
 
 // Data
-
 const account1 = {
   owner: "Jonas Schmedtmann",
   movements: [200, 450, -400, 3000, -650, -130, 70, 1300],
@@ -61,32 +60,30 @@ const movements = [200, 450, -400, 3000, -650, -130, 70, 1300];
 //   });
 // };
 
+const eurToUsd = 1.1;
+const movementsUSD = movements.map((mov) => mov * eurToUsd);
+
+// create username
+const createUsernames = (accs) => {
+  accs.forEach((acc) => {
+    acc.username = acc.owner
+      .toLowerCase()
+      .split(" ")
+      .map((name) => name[0])
+      .join("");
+  });
+};
+
+createUsernames(accounts);
+
+// filter
+const deposit = movements.filter((mov) => mov > 0);
+const withdrawal = movements.filter((mov) => mov < 0);
+
+// reduce
+const balance = movements.reduce((mov) => {});
+
 const Table = () => {
-  //   useMemo(() => displayMovements(account1.movements), []);
-
-  const eurToUsd = 1.1;
-
-  const movementsUSD = movements.map((mov) => mov * eurToUsd);
-
-  //   movements.map((mov, i, arr) => {
-  //     console.log("mov", mov, "i", i, "arr", arr);
-  //   });
-
-  //   create username
-
-  const createUsernames = (accs) => {
-    accs.forEach((acc) => {
-      acc.username = acc.owner
-        .toLowerCase()
-        .split(" ")
-        .map((name) => name[0])
-        .join("");
-    });
-  };
-
-  createUsernames(accounts);
-  console.log(accounts);
-
   return (
     <div className="w-full">
       <table className=" w-full bg-white rounded-md drop-shadow-md overflow-y-scroll">
