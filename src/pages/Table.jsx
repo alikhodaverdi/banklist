@@ -1,4 +1,4 @@
-import React, { useMemo } from "react";
+import React, { useEffect, useMemo, useState } from "react";
 
 // Data
 const account1 = {
@@ -76,14 +76,30 @@ const createUsernames = (accs) => {
 
 createUsernames(accounts);
 
-// filter
-const deposit = movements.filter((mov) => mov > 0);
-const withdrawal = movements.filter((mov) => mov < 0);
+// maximum value
 
-// reduce
-const balance = movements.reduce((mov) => {});
+const max = movements.reduce((acc, mov) => {
+  if (acc > mov) {
+    return acc;
+  } else {
+    return mov;
+  }
+}, movements[0]);
+
+console.log(max);
 
 const Table = () => {
+  // Lable balance
+  const [labelBalance, setLabelBalance] = useState();
+  const calcPrintBalance = (movements) => {
+    const balance = movements.reduce((acc, mov) => acc + mov, 0);
+    setLabelBalance(balance);
+  };
+
+  useEffect(() => {
+    calcPrintBalance(account1.movements);
+  }, []);
+
   return (
     <div className="w-full">
       <table className=" w-full bg-white rounded-md drop-shadow-md overflow-y-scroll">
