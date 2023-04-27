@@ -2,11 +2,7 @@ import Table from "./pages/Table";
 import Footer from "./pages/Footer";
 import Column from "./pages/Column";
 import { Navigate, Route } from "react-router-dom";
-<<<<<<< HEAD
-import { useEffect, useRef, useState } from "react";
-=======
 import { useEffect, useState } from "react";
->>>>>>> f6e3db0e0a964ca9354a927d51fff93274aca88f
 import Login from "./pages/Login";
 import { useNavigate } from "react-router-dom";
 
@@ -45,18 +41,6 @@ const accounts = [account1, account2, account3, account4];
 const Home = () => {
   const navigate = useNavigate();
 
-<<<<<<< HEAD
-  // dumy validation login
-
-  const [username, setusername] = useState("");
-  const [password, setpassword] = useState("");
-
-  localStorage.setItem("username", "Demo");
-  const usernamex = localStorage.getItem("username");
-
-  useEffect(() => {
-    if (username === "Demo") {
-=======
   const account1 = {
     owner: "Jonas Schmedtmann",
     movements: [200, 450, -400, 3000, -650, -130, 70, 1300],
@@ -92,7 +76,6 @@ const Home = () => {
   const username = localStorage.getItem("username");
   useEffect(() => {
     if (username !== "Demo") {
->>>>>>> f6e3db0e0a964ca9354a927d51fff93274aca88f
       navigate("/login");
     }
   });
@@ -253,19 +236,11 @@ const Home = () => {
           <div>
             <form className="gap-2 flex" onSubmit={(e) => handleSubmit(e)}>
               <input
-<<<<<<< HEAD
-                ref={userNameInputRef}
-=======
->>>>>>> f6e3db0e0a964ca9354a927d51fff93274aca88f
                 name="username"
                 placeholder="user"
                 className="bg-gray-200 rounded-full w-20 p-2"
               ></input>
               <input
-<<<<<<< HEAD
-                ref={pinInputRef}
-=======
->>>>>>> f6e3db0e0a964ca9354a927d51fff93274aca88f
                 name="pin"
                 placeholder="pin"
                 className="bg-gray-200 rounded-full w-20 p-2"
