@@ -1,5 +1,3 @@
-import React from "react";
-
 const Column = () => {
   return (
     <div className="max-w-5xl w-full flex flex-col  gap-4 px-20 ">
@@ -12,9 +10,7 @@ const Column = () => {
                 className="bg-yellow-200 rounded-lg focus:outline-none  py-2"
                 id="transferto"
               ></input>
-              <label htmlFor="transferto" c>
-                Transfer to
-              </label>
+              <label htmlFor="transferto">Transfer to</label>
             </div>
             <div className="flex flex-col justify-center items-center gap-2">
               <input
@@ -38,9 +34,7 @@ const Column = () => {
                 className="bg-green-200 rounded-lg focus:outline-none  py-2"
                 id="transferto"
               ></input>
-              <label htmlFor="transferto" c>
-                Amount
-              </label>
+              <label htmlFor="transferto">Amount</label>
             </div>
 
             <button type="submit" className="bg-white h-10 rounded-lg p-2">
