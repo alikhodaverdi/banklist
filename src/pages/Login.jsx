@@ -1,14 +1,25 @@
-import React from "react";
+import React, { useState } from "react";
 import { useForm } from "react-hook-form";
+import { useNavigate } from "react-router-dom";
 
 const Login = () => {
+  const navigate = useNavigate();
+  const [username, setusername] = useState("");
+  const [password, setpassword] = useState("");
   const {
     register,
     handleSubmit,
-    watch,
     formState: { errors },
   } = useForm();
-  const onSubmit = (data) => console.log(data);
+  const onSubmit = (data) => {
+    setusername(data.username);
+    setpassword(data.password);
+  };
+
+  if (username === "demo" && password === "demo") {
+    localStorage.setItem("username", "Demo");
+    navigate("/");
+  }
 
   return (
     <div className="bg-black min-h-screen flex">
