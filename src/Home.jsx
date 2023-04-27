@@ -63,7 +63,7 @@ const Home = () => {
     accs.forEach(function (acc) {
       acc.username = acc.owner
         .toLowerCase()
-        .split("")
+        .split(" ")
         .map((name) => name[0])
         .join("");
     });
@@ -104,23 +104,54 @@ const Home = () => {
 
   // calcDisplayBalance(account1);
 
+  // handle Submit evenet handler
+  const [usernamehome, setUsernamehome] = useState("");
+  const [pinhome, setPinHome] = useState();
+  const [lableWelcome, setlableWelcome] = useState();
+  const [displayMovements, setdisplayMovements] = useState();
+  const [ccaDisplayBalance, setccaDisplayBalance] = useState();
+  const [ccaDisplaySummery, setccaDisplaySummery] = useState();
+  let currentAccount;
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    setUsernamehome(e.target.username.value);
+    setPinHome(e.target.pin.value);
+    currentAccount = accounts.find((acc) => acc.username === usernamehome);
+
+    if (currentAccount?.pin === Number(pinhome)) {
+      console.log("LOGIN");
+
+      //  display ui and message
+      setlableWelcome(`Welcome back , ${currentAccount.owner.split(" ")[0]}`);
+
+      // display movements
+      setdisplayMovements(currentAccount.movements);
+      // dsiplay balance
+      setccaDisplayBalance(currentAccount.movements);
+      // display summary
+      setccaDisplaySummery(currentAccount.movements);
+    }
+  };
+
   return (
     <div>
       {/* header */}
       <div className="flex justify-between items-center px-8 py-10">
-        <div className="font-semibold">Good morning , mehrdad</div>
+        <div className="font-semibold">{lableWelcome}</div>
         <img
           className="h-20"
           src="https://upload.wikimedia.org/wikipedia/commons/b/b9/Bank_Melli_Iran_New_Logo.png"
         />
         <div>
           <div>
-            <form className="gap-2 flex">
+            <form className="gap-2 flex" onSubmit={(e) => handleSubmit(e)}>
               <input
+                name="username"
                 placeholder="user"
                 className="bg-gray-200 rounded-full w-20 p-2"
               ></input>
               <input
+                name="pin"
                 placeholder="pin"
                 className="bg-gray-200 rounded-full w-20 p-2"
               ></input>
@@ -139,7 +170,7 @@ const Home = () => {
         </div>
 
         <div>
-          <h1 className="text-3xl">21 952,59 $</h1>
+          <h1 className="text-3xl">{ccaDisplayBalance} $</h1>
         </div>
       </div>
       <div className="flex  px-52 md:px-30  h-full">
