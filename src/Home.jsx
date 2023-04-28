@@ -2,7 +2,7 @@ import Table from "./pages/Table";
 import Footer from "./pages/Footer";
 import Column from "./pages/Column";
 import { Navigate, Route } from "react-router-dom";
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import Login from "./pages/Login";
 import { useNavigate } from "react-router-dom";
 
@@ -40,37 +40,6 @@ const accounts = [account1, account2, account3, account4];
 
 const Home = () => {
   const navigate = useNavigate();
-
-  const account1 = {
-    owner: "Jonas Schmedtmann",
-    movements: [200, 450, -400, 3000, -650, -130, 70, 1300],
-    interestRate: 1.2, // %
-    pin: 1111,
-  };
-
-  const account2 = {
-    owner: "Jessica Davis",
-    movements: [5000, 3400, -150, -790, -3210, -1000, 8500, -30],
-    interestRate: 1.5,
-    pin: 2222,
-  };
-
-  const account3 = {
-    owner: "Steven Thomas Williams",
-    movements: [200, -200, 340, -300, -20, 50, 400, -460],
-    interestRate: 0.7,
-    pin: 3333,
-  };
-
-  const account4 = {
-    owner: "Sarah Smith",
-    movements: [430, 1000, 700, 50, 90],
-    interestRate: 1,
-    pin: 4444,
-  };
-
-  const accounts = [account1, account2, account3, account4];
-  const movements = [200, 450, -400, 3000, -650, -130, 70, 1300];
 
   // dumy validation login
   const username = localStorage.getItem("username");
@@ -192,49 +161,28 @@ const Home = () => {
     calcDisplaySummery(account1.movements);
   }, [lableSumIn, lableSumOut, lableSumIntrest]);
 
-  // calcDisplayBalance(account1);
+  // aray fill and arry.from
+  const arr = [1, 2, 3, 4, 5, 6, 7];
+  // console.log(new Array(1, 2, 3, 4, 5, 6, 7));
+  const x = new Array(7);
+  // console.log(x);
+  x.fill(1, 3, 5);
+  // console.log(x);
 
-  // handle Submit evenet handler
-  const [usernamehome, setUsernamehome] = useState("");
-  const [pinhome, setPinHome] = useState();
-  const [lableWelcome, setlableWelcome] = useState();
-  const [displayMovements, setdisplayMovements] = useState();
-  const [ccaDisplayBalance, setccaDisplayBalance] = useState();
-  const [ccaDisplaySummery, setccaDisplaySummery] = useState();
-  let currentAccount;
-  const handleSubmit = (e) => {
-    e.preventDefault();
-    setUsernamehome(e.target.username.value);
-    setPinHome(e.target.pin.value);
-    currentAccount = accounts.find((acc) => acc.username === usernamehome);
-
-    if (currentAccount?.pin === Number(pinhome)) {
-      console.log("LOGIN");
-
-      //  display ui and message
-      setlableWelcome(`Welcome back , ${currentAccount.owner.split(" ")[0]}`);
-
-      // display movements
-      setdisplayMovements(currentAccount.movements);
-      // dsiplay balance
-      setccaDisplayBalance(currentAccount.movements);
-      // display summary
-      setccaDisplaySummery(currentAccount.movements);
-    }
-  };
+  const y = Array.from({ length: 7 }, (_, i) => i + 1);
 
   return (
     <div>
       {/* header */}
       <div className="flex justify-between items-center px-8 py-10">
-        <div className="font-semibold">{lableWelcome}</div>
+        <div className="font-semibold">{labaleWelcome}</div>
         <img
           className="h-20"
           src="https://upload.wikimedia.org/wikipedia/commons/b/b9/Bank_Melli_Iran_New_Logo.png"
         />
         <div>
           <div>
-            <form className="gap-2 flex" onSubmit={(e) => handleSubmit(e)}>
+            <form className="gap-2 flex">
               <input
                 name="username"
                 placeholder="user"
@@ -263,7 +211,7 @@ const Home = () => {
         </div>
 
         <div>
-          <h1 className="text-3xl">{ccaDisplayBalance} $</h1>
+          <h1 className="text-3xl">{calcDisplayBalance} $</h1>
         </div>
       </div>
       <div className="flex  px-52 md:px-30  h-full">
